@@ -3,10 +3,10 @@
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
 ;; Version: 1.2
 ;; Time-stamp: <2011-08-03 21:40:31 thamer>
-;; URL: http://www.emacswiki.org/emacs/download/diredful.el
+;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
-;; Compatibility: Tested on GNU Emacs 23.2
-;; Copyright (C) 2011 Thamer Mahmoud, all rights reserved.
+;; Compatibility: Tested on GNU Emacs 23.3 and 24.3
+;; Copyright (C) 2011-4 Thamer Mahmoud, all rights reserved.
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -311,7 +311,7 @@ dired buffers"
     ;; (unless (facep face-str)
     ;;   (setq face-str 'default))
     (require 'widget)
-    ;; FIXIT: Loading this alone might break customize colors?
+    ;; FIXME: Loading this alone might break customize button faces colors?
     (require 'cus-edit) ;; for custom-face-edit
     (widget-insert "Type `C-c C-c' or press [Save] after you have \
 finished editing.\n\n" )
@@ -356,8 +356,8 @@ file name).\n"))
            (ignore (widget-insert "\n"))
            ;; Face Attributes
            (ignore (widget-insert "Face to use:\n\n"))
-           ;; FIXIT: Use a better equivalent to custom-face-edit if
-           ;; there is one
+           ;; FIXME: Use a better equivalent to custom-face-edit if
+           ;; there is one. See last FIXME.
            (widget-create 'custom-face-edit :value face-str)))
     ;; Delete empty widget-insert
     (delq nil diredful-widgets)
@@ -481,7 +481,7 @@ defined. Define a new file type using diredful-add.")
       (diredful-apply "^[*]" "dired-marked" nil enable))))
 
 (diredful-settings-load)
-;;; Is it necessary to disable diredful at startup?
+;;; FIXME: Is it necessary to disable diredful at startup?
 ;; (diredful 0)
 (diredful 1)
 (provide 'diredful)
