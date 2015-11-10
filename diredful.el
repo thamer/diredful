@@ -1,12 +1,12 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.2
-;; Time-stamp: <2011-08-03 21:40:31 thamer>
+;; Version: 1.3
+;; Time-stamp: <2015-11-10 13:31:32 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
-;; Compatibility: Tested on GNU Emacs 23.3 and 24.3
-;; Copyright (C) 2011-4 Thamer Mahmoud, all rights reserved.
+;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
+;; Copyright (C) 2011-5 Thamer Mahmoud, all rights reserved.
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -45,34 +45,35 @@
 ;;
 ;;     M-x diredful-add
 ;;
-;; This will ask you to define a new name for a file type, like
-;; "images". You can then specify a list of extensions and file names
-;; that belong to this type, and customize the face that will be
-;; used to display them. A new face will be automatically generated
-;; and updated for each type.
+;; This will ask you to define a new name for a file type, such as
+;; "images". You can then specify a list of extensions or file names
+;; that belong to this type and customize the face used to display
+;; them. A new face will be automatically generated and updated for
+;; each type.
 ;;
 ;; Note: changes will only be applied to newly created dired
 ;; buffers.
 ;;
-;; File Types can be added, edited, and deleted using any of the
-;; following three commands:
+;; File Types can be added, edited, and deleted using the following
+;; commands:
 ;;
 ;;     M-x diredful-add
 ;;     M-x diredful-delete
 ;;     M-x diredful-edit
+;;     M-x diredful-edit-file-at-point
 ;;
 ;; These settings will be saved to the location of
-;; `diredful-init-file' (the default location is
+;; `diredful-init-file' (the default is
 ;; "~/.emacs.d/diredful-conf.el"). You may choose a different location
 ;; by doing:
 ;;
 ;;     M-x customize-variable <ENTER> diredful-init-file
 ;;
 ;; Tip: File type names are sorted alphabetically before being
-;; applied. If two file types matched the same file, the
-;; file type that comes last in an alphabetically-sorted list will
-;; take precedence (e.g., a type named "zworldwritable" will take
-;; priority over other file types).
+;; applied. If two file types matched the same file, the file type
+;; that comes last in an alphabetically-sorted list will take
+;; precedence (e.g., a type named "zworldwritable" will take priority
+;; over other types).
 ;;
 
 ;;; Code:
@@ -107,8 +108,8 @@ buffers. Each type has the following structure:
  WHOLELINE ;; if non-nil, apply face to the whole line \
  not just the file name.
  WITHDIR ;; if non-nil, include directories when applying pattern.
- WITHOUTLINK ;; if non-nil, exclude symbolic links when applying.
- pattern")
+ WITHOUTLINK ;; if non-nil, exclude symbolic links when applying
+ pattern.")
 
 (defun diredful-settings-save ()
   (let ((file (expand-file-name diredful-init-file)))
@@ -128,12 +129,12 @@ buffers. Each type has the following structure:
 file found. Run diredful-add.")
           (insert-file-contents file)
           (goto-char (point-min))
-	  ;; Check whether names is loaded
+          ;; Check whether names is loaded
           (condition-case eof
               (setq diredful-names (read (current-buffer)))
             (end-of-file (message "diredful: Failed to load. \
             File exists but empty or corrupt.")))
-	  ;; Check whether list is loaded
+          ;; Check whether list is loaded
           (condition-case eof
               (setq diredful-alist (read (current-buffer)))
             (end-of-file (message "diredful: Failed to load. \
@@ -248,7 +249,7 @@ another name" doc-string)))) name)
 
 (defun diredful-add (name)
   "Add a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (append
     (let* ((name (read-string (format "New name for file type: "))))
@@ -261,7 +262,7 @@ dired buffers"
 
 (defun diredful-delete (name)
   "Delete a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (list
     (completing-read
@@ -283,9 +284,20 @@ dired buffers"
 (defvar diredful-widgets nil
   "List holding widget information.")
 
+(defun diredful-edit-file-at-point ()
+  "Edit file under point by checking what face is currently active."
+  (interactive)
+  (let ((cface (face-at-point nil nil)))
+    (unless (stringp cface)
+      (setq cface (symbol-name cface)))
+    (if (string-match "diredful" cface)
+        (diredful-edit (substring cface 14))
+      (error "Diredful: No pattern defined for this file or extension.\
+ Use diredful-add first."))))
+
 (defun diredful-edit (name)
   "Edit a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (list (completing-read "Edit Dired Color: "
                           diredful-names nil t)))
@@ -453,7 +465,7 @@ defined. Define a new file type using diredful-add.")
                   (split-string ft-pattern) ft-withdir ft-withoutlink)
                  (if (facep ft-face)
                      (symbol-name ft-face)
-                  (diredful-make-face (car sorted) ft-face)) ft-whole
+                   (diredful-make-face (car sorted) ft-face)) ft-whole
                    enable)))
              ;; Type is a file name
              ((eq ft-type t)

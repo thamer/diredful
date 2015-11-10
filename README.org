@@ -3,12 +3,12 @@ display files in different faces and colors. Faces are chosen based
 on file extension, file name, or a regexp that matches the whole
 file line.
 
-Screenshots are available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
+Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
 
 * Install
 
-Put this file in your Emacs-Lisp load path, and add the following
-into your $HOME/.emacs startup file.
+Put =diredful.el= in your Emacs-Lisp load path, and add the following
+into your =$HOME/.emacs= startup file.
 
 : (require 'diredful)
 
@@ -19,23 +19,23 @@ Do:
 : M-x diredful-add
 
 This will ask you to define a new name for a file type, like
-"images". You can then specify a list of extensions and file names
-that belong to this type, and customize the face that will be
-used to display them. A new face will be automatically generated
-and updated for each type.
+"images". You can then specify a list of extensions or file names that
+belong to this type and customize the face used to display them. A
+new face will be automatically generated and updated for each type.
 
 Note: changes will only be applied to newly created dired
 buffers.
 
-File Types can be added, edited, and deleted using any of the
-following three commands:
+File Types can be added, edited, and deleted using the
+following commands:
 
 : M-x diredful-add
 : M-x diredful-delete
 : M-x diredful-edit
+: M-x diredful-edit-file-at-point
 
 These settings will be saved to the location of
-=diredful-init-file= (the default location is
+=diredful-init-file= (the default is
 "~/.emacs.d/diredful-conf.el"). You may choose a different location
 by doing:
 
@@ -43,10 +43,9 @@ by doing:
 
 * Tips
 
-File type names are sorted alphabetically before being
-applied. If two file types matched the same file, the
-file type that comes last in an alphabetically-sorted list will
-take precedence (e.g., a type named "zworldwritable" will take
-priority over other file types).
+File type names are sorted alphabetically before being applied. If two
+file types matched the same file, the file type that comes last in an
+alphabetically-sorted list will take precedence (e.g., a type named
+"zworldwritable" will take priority over other types).
 
 The world-writable regexp pattern used in the screenshot is =[rwx-][rwx-][rwx-][rwx-][rwx-][rwx-][rwx-]w[trwx-]=.
