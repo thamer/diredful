@@ -1,8 +1,8 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.3
-;; Time-stamp: <2015-11-10 13:31:32 thamer>
+;; Version: 1.4
+;; Time-stamp: <2015-11-13 15:15:03 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
 ;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
@@ -293,7 +293,7 @@ dired buffers."
     (if (string-match "diredful" cface)
         (diredful-edit (substring cface 14))
       (error "Diredful: No pattern defined for this file or extension.\
- Use diredful-add first."))))
+ Please use diredful-add first."))))
 
 (defun diredful-edit (name)
   "Edit a file type used for choosing colors to file names in
@@ -320,10 +320,7 @@ dired buffers."
     (make-local-variable 'diredful-widgets)
     (erase-buffer)
     (remove-overlays)
-    ;; (unless (facep face-str)
-    ;;   (setq face-str 'default))
-    (require 'widget)
-    ;; FIXME: Loading this alone might break customize button faces colors?
+    (require 'wid-edit)
     (require 'cus-edit) ;; for custom-face-edit
     (widget-insert "Type `C-c C-c' or press [Save] after you have \
 finished editing.\n\n" )
@@ -331,15 +328,11 @@ finished editing.\n\n" )
           (list
            ;; This widget also includes the current name of the type
            ;; being edited.
-           (let ((wid (widget-create
-                       'editable-field :value name
-                       :format "Type Name: %v" "")))
-             (widget-put wid :being-edited name)
-             wid)
+           (widget-create 'editable-field :value name
+                          :format "Type Name: %v" "")
            (ignore (widget-insert "\n"))
-           (widget-create
-            'editable-field :value pattern-str
-            :format "Pattern: %v" "")
+           (widget-create 'editable-field :value pattern-str
+                          :format "Pattern: %v" "")
            (ignore (widget-insert "\nPattern Type:\n"))
            (widget-create
             'radio-button-choice
@@ -368,8 +361,6 @@ file name).\n"))
            (ignore (widget-insert "\n"))
            ;; Face Attributes
            (ignore (widget-insert "Face to use:\n\n"))
-           ;; FIXME: Use a better equivalent to custom-face-edit if
-           ;; there is one. See last FIXME.
            (widget-create 'custom-face-edit :value face-str)))
     ;; Delete empty widget-insert
     (delq nil diredful-widgets)
@@ -388,9 +379,13 @@ file name).\n"))
                              (kill-buffer))
                    "Cancel")
     (widget-insert "\n\n")
-    ;; This is needed to get rid of cus-edit bindings.
+    ;; Editable name
+    (widget-put (nth 0 diredful-widgets) :being-edited name)
+    ;; FIXME: This is needed to get rid of cus-edit bindings. However,
+    ;; "C-c C-c" still doesn't work for editable-fields inside a
+    ;; custom-face-edit.
+    (mapc (lambda (p) (widget-put p :keymap nil)) diredful-widgets)
     ;; Keymaps
-    (widget-put (get 'editable-field 'widget-type) :keymap nil)
     (set-keymap-parent map widget-keymap)
     (define-key map (kbd "C-c C-c")
       '(lambda () (interactive)
