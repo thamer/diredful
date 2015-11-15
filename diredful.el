@@ -1,8 +1,8 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.5
-;; Time-stamp: <2015-11-15 17:16:51 thamer>
+;; Version: 1.6
+;; Time-stamp: <2015-11-15 21:22:43 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
 ;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
@@ -38,6 +38,7 @@
 ;; into your $HOME/.emacs startup file.
 ;;
 ;;     (require 'diredful)
+;;     (diredful-mode 1)
 ;;
 ;;; Usage:
 ;;
@@ -77,10 +78,6 @@
 ;;
 
 ;;; Code:
-(require 'dired)
-(require 'dired-x)
-;;; wid-edit and cus-edit are required below
-
 (defgroup diredful nil "diredful group"
   :group 'convenience
   :group 'dired)
@@ -430,6 +427,8 @@ update."
     (diredful 1)))
 
 (defun diredful (enable)
+  (require 'dired)
+  (require 'dired-x)
   (if (not (length diredful-names))
       (message "diredful: No file types have been \
 defined. Define a new file type using diredful-add.")
@@ -486,9 +485,16 @@ defined. Define a new file type using diredful-add.")
       (diredful-apply "^[D]" "dired-flagged" nil enable)
       (diredful-apply "^[*]" "dired-marked" nil enable))))
 
-(diredful-settings-load)
-;;; FIXME: Is it necessary to disable diredful at startup?
-;; (diredful 0)
-(diredful 1)
+(define-minor-mode diredful-mode
+  "Toggle diredful minor mode. Will only affect newly created
+dired buffers."
+  :global t
+  :group 'diredful
+  (if diredful-mode
+      (progn 
+        (diredful-settings-load)
+        (diredful 1))
+    (diredful 0)))
+
 (provide 'diredful)
 ;;; diredful.el ends here.
