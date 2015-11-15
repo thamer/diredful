@@ -485,6 +485,7 @@ defined. Define a new file type using diredful-add.")
       (diredful-apply "^[D]" "dired-flagged" nil enable)
       (diredful-apply "^[*]" "dired-marked" nil enable))))
 
+;;;###autoload
 (define-minor-mode diredful-mode
   "Toggle diredful minor mode. Will only affect newly created
 dired buffers."
