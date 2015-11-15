@@ -1,8 +1,8 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.4
-;; Time-stamp: <2015-11-13 15:15:03 thamer>
+;; Version: 1.5
+;; Time-stamp: <2015-11-15 17:16:51 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
 ;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
@@ -138,8 +138,7 @@ file found. Run diredful-add.")
           (condition-case eof
               (setq diredful-alist (read (current-buffer)))
             (end-of-file (message "diredful: Failed to load. \
-            File exists but empty or corrupt.")))
-          (setq diredful-custom-loaded t))))))
+            File exists but empty or corrupt."))))))))
 
 (defun diredful-filter (condp ls)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) ls)))
@@ -292,7 +291,7 @@ dired buffers."
       (setq cface (symbol-name cface)))
     (if (string-match "diredful" cface)
         (diredful-edit (substring cface 14))
-      (error "Diredful: No pattern defined for this file or extension.\
+      (error "diredful: No pattern defined for this file or extension.\
  Please use diredful-add first."))))
 
 (defun diredful-edit (name)
