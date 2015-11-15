@@ -11,6 +11,7 @@ Put =diredful.el= in your Emacs-Lisp load path, and add the following
 into your =$HOME/.emacs= startup file.
 
 : (require 'diredful)
+: (diredful-mode 1)
 
 * Usage
 
