@@ -1,8 +1,8 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.6
-;; Time-stamp: <2015-11-15 21:22:43 thamer>
+;; Version: 1.7
+;; Time-stamp: <2015-11-16 13:22:21 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
 ;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
@@ -268,14 +268,14 @@ dired buffers."
     (error "File type cannot be empty"))
   ;; Reset all colors from dired font-lock so that any deleted types
   ;; wouldn't remain active
-  (diredful 0)
+  (diredful-internal 0)
   ;; No assoc-delete-all?
   (setq diredful-alist
         (remove (assoc name diredful-alist) diredful-alist))
   (setq diredful-names (remove name diredful-names))
   (diredful-settings-save)
   ;; Re-Enable colors
-  (diredful 1))
+  (diredful-internal 1))
 
 (defvar diredful-widgets nil
   "List holding widget information.")
@@ -423,15 +423,13 @@ update."
                        withoutlink))
     (add-to-list 'diredful-names name)
     (diredful-settings-save)
-    (diredful 0)
-    (diredful 1)))
+    (diredful-internal 0)
+    (diredful-internal 1)))
 
-(defun diredful (enable)
-  (require 'dired)
-  (require 'dired-x)
+(defun diredful-internal (enable)
   (if (not (length diredful-names))
       (message "diredful: No file types have been \
-defined. Define a new file type using diredful-add.")
+defined. Please define a new file type using diredful-add.")
     (let (sorted name)
       ;; Make a copy of list
       (setq sorted (append diredful-names nil))
@@ -488,14 +486,17 @@ defined. Define a new file type using diredful-add.")
 ;;;###autoload
 (define-minor-mode diredful-mode
   "Toggle diredful minor mode. Will only affect newly created
-dired buffers."
+dired buffers. When diredful mode is enabled, files in dired
+buffers will be displayed in different faces and colors."
   :global t
   :group 'diredful
+  (require 'dired)
+  (require 'dired-x)
   (if diredful-mode
       (progn 
         (diredful-settings-load)
-        (diredful 1))
-    (diredful 0)))
+        (diredful-internal 1))
+    (diredful-internal 0)))
 
 (provide 'diredful)
 ;;; diredful.el ends here.
