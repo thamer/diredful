@@ -427,6 +427,7 @@ update."
     (diredful-internal 1)))
 
 (defun diredful-internal (enable)
+  "Used to reset and reload diredful variables."
   (if (not (length diredful-names))
       (message "diredful: No file types have been \
 defined. Please define a new file type using diredful-add.")
