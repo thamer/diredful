@@ -1,11 +1,11 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.7
-;; Time-stamp: <2015-11-16 13:22:21 thamer>
+;; Version: 1.8
+;; Time-stamp: <2015-11-17 19:29:27 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
-;; Compatibility: Tested on GNU Emacs 23.3 and 24.5
+;; Compatibility: Tested on GNU Emacs 23.4 and 24.5
 ;; Copyright (C) 2011-5 Thamer Mahmoud, all rights reserved.
 
 ;; This file is NOT part of GNU Emacs.
@@ -283,11 +283,15 @@ dired buffers."
 (defun diredful-edit-file-at-point ()
   "Edit file under point by checking what face is currently active."
   (interactive)
-  (let ((cface (face-at-point nil nil)))
+  (let ((cface (face-at-point)))
     (unless (stringp cface)
       (setq cface (symbol-name cface)))
     (if (string-match "diredful" cface)
-        (diredful-edit (substring cface 14))
+        (let ((name (substring cface 14)))
+          (if (member name diredful-names)
+              (diredful-edit name)
+            (error "diredful: The type '%s' is not found or was\
+ renamed. Revisit the current buffer to edit the current name." name)))
       (error "diredful: No pattern defined for this file or extension.\
  Please use diredful-add first."))))
 
@@ -318,7 +322,7 @@ dired buffers."
     (remove-overlays)
     (require 'wid-edit)
     (require 'cus-edit) ;; for custom-face-edit
-    (widget-insert "Type `C-c C-c' or press [Save] after you have \
+    (widget-insert "Type `C-c C-v' or press [Save] after you have \
 finished editing.\n\n" )
     (setq diredful-widgets
           (list
@@ -366,8 +370,7 @@ file name).\n"))
      'push-button
      :button-face 'custom-button
      :notify (lambda (&rest ignore)
-               (diredful-save diredful-widgets)
-               (kill-buffer)) "Save")
+               (diredful-save diredful-widgets)) "Save")
     (widget-insert " ")
     (widget-create 'push-button
                    :button-face 'custom-button
@@ -378,15 +381,13 @@ file name).\n"))
     ;; Editable name
     (widget-put (nth 0 diredful-widgets) :being-edited name)
     ;; FIXME: This is needed to get rid of cus-edit bindings. However,
-    ;; "C-c C-c" still doesn't work for editable-fields inside a
+    ;; "C-c C-v" doesn't work for editable-fields inside a
     ;; custom-face-edit.
     (mapc (lambda (p) (widget-put p :keymap nil)) diredful-widgets)
     ;; Keymaps
     (set-keymap-parent map widget-keymap)
-    (define-key map (kbd "C-c C-c")
-      '(lambda () (interactive)
-         (diredful-save diredful-widgets)
-         (kill-buffer)))
+    (define-key map (kbd "C-c C-v")
+      '(lambda () (interactive) (diredful-save diredful-widgets)))
     (use-local-map map)
     (widget-setup))
   (goto-char (point-min))
@@ -424,7 +425,8 @@ update."
     (add-to-list 'diredful-names name)
     (diredful-settings-save)
     (diredful-internal 0)
-    (diredful-internal 1)))
+    (diredful-internal 1)
+    (kill-buffer)))
 
 (defun diredful-internal (enable)
   "Used to reset and reload diredful variables."
@@ -494,7 +496,7 @@ buffers will be displayed in different faces and colors."
   (require 'dired)
   (require 'dired-x)
   (if diredful-mode
-      (progn 
+      (progn
         (diredful-settings-load)
         (diredful-internal 1))
     (diredful-internal 0)))
