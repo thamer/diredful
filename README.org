@@ -1,4 +1,6 @@
-*Diredful.el* provides a simple UI to customize dired mode to use different faces and colors. Faces are chosen based on file extension, file name, or a regexp matching the file line.
+*Diredful.el* provides a simple UI for customizing dired mode to use
+different faces and colors. Faces are chosen based on file extension,
+file name, or a regexp matching the file line.
 
 Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
 
