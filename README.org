@@ -1,3 +1,7 @@
+* Diredful.el
+
+[[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
+
 This package provides a simple way to customize dired mode to
 display files in different faces and colors. Faces are chosen based
 on file extension, file name, or a regexp that matches the whole
@@ -5,15 +9,24 @@ file line.
 
 Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
 
-* Install
+** Install
 
-Put =diredful.el= in your Emacs-Lisp load path, and add the following
-into your =$HOME/.emacs= startup file.
+Using Melpa, do:
+
+: M-x package-install RET diredful RET
+
+To enable =diredful-mode= by default in all dired buffers, add the
+following into your =$HOME/.emacs= startup file:
+
+: (diredful-mode 1)
+
+For manual installation, put =diredful.el= in your Emacs-Lisp load
+path, and add the following into your =$HOME/.emacs= startup file.
 
 : (require 'diredful)
 : (diredful-mode 1)
 
-* Usage
+** Usage
 
 Do:
 
@@ -40,9 +53,9 @@ These settings will be saved to the location of
 "~/.emacs.d/diredful-conf.el"). You may choose a different location
 by doing:
 
-: M-x customize-variable <ENTER> diredful-init-file
+: M-x customize-variable RET diredful-init-file
 
-* Tips
+** Tips
 
 File type names are sorted alphabetically before being applied. If two
 file types matched the same file, the file type that comes last in an
