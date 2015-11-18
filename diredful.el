@@ -1,8 +1,8 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.8
-;; Time-stamp: <2015-11-17 19:29:27 thamer>
+;; Version: 1.9
+;; Time-stamp: <2015-11-17 23:31:21 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
 ;; Compatibility: Tested on GNU Emacs 23.4 and 24.5
@@ -500,6 +500,13 @@ buffers will be displayed in different faces and colors."
         (diredful-settings-load)
         (diredful-internal 1))
     (diredful-internal 0)))
+
+;;;###autoload
+(defcustom diredful-mode nil nil
+  :set 'custom-set-minor-mode
+  :type    'boolean
+  :group   'diredful
+)
 
 (provide 'diredful)
 ;;; diredful.el ends here.
