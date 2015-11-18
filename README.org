@@ -1,13 +1,11 @@
-* Diredful.el [[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
-
-This package provides a simple way to customize dired mode to
+*Diredful.el* provides a simple way to customize dired mode to
 display files in different faces and colors. Faces are chosen based
 on file extension, file name, or a regexp that matches the whole
 file line.
 
 Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
 
-** Install
+** Install [[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
 
 Using Melpa:
 
