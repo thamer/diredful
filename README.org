@@ -11,7 +11,7 @@ Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][Emac
 
 ** Install
 
-Using Melpa, do:
+Using Melpa:
 
 : M-x package-install RET diredful RET
 
