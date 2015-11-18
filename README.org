@@ -15,7 +15,7 @@ Using Melpa:
 
 : M-x package-install RET diredful RET
 
-To enable =diredful-mode= by default in all dired buffers, add the
+To enable =diredful-mode= by default in dired buffers, add the
 following into your =$HOME/.emacs= startup file:
 
 : (diredful-mode 1)
