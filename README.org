@@ -10,12 +10,12 @@ Using Melpa:
 
 : M-x package-install RET diredful RET
 
-Then to activate, add the following into your =$HOME/.emacs= startup file:
+Then to activate add the following into your init file:
 
 : (diredful-mode 1)
 
-For manual installation, put =diredful.el= in your Emacs-Lisp load
-path, and add the following into your =.emacs=:
+For manual installation, put diredful.el in your Emacs-Lisp load
+path, and add this to your init file:
 
 : (require 'diredful)
 : (diredful-mode 1)
