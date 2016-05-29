@@ -4,7 +4,7 @@ file name, or a regexp matching the file line.
 
 Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
 
-** Install [[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
+** Install [[https://stable.melpa.org/#/diredful][file:https://stable.melpa.org/packages/diredful-badge.svg]] [[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
 
 Using Melpa:
 
