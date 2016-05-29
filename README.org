@@ -10,7 +10,8 @@ Using Melpa:
 
 : M-x package-install RET diredful RET
 
-Then to activate add the following into your init file:
+Then to activate by default, add the following into your init file
+(customizing this variable will not work):
 
 : (diredful-mode 1)
 

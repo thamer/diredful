@@ -1,14 +1,14 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.9
-;; Time-stamp: <2015-11-17 23:31:21 thamer>
+;; Version: 1.10
+;; Time-stamp: <2016-05-29 19:12:11 thamer>
 ;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
-;; Compatibility: Tested on GNU Emacs 23.4 and 24.5
-;; Copyright (C) 2011-5 Thamer Mahmoud, all rights reserved.
+;; Compatibility: Tested on GNU Emacs 23.4 and 24.x
+;; Copyright (C) 2011-6 Thamer Mahmoud, all rights reserved.
 
-;; This file is NOT part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -77,7 +77,7 @@
 ;;
 
 ;;; Code:
-(defgroup diredful nil "diredful group"
+(defgroup diredful nil "Colorful file names in dired buffers."
   :group 'convenience
   :group 'dired)
 
@@ -500,8 +500,13 @@ buffers will be displayed in different faces and colors."
         (diredful-internal 1))
     (diredful-internal 0)))
 
+;; FIXME: There is an autoload bug when using melpa that prevents this
+;; variable from being set using the customize interface.
 ;;;###autoload
-(defcustom diredful-mode nil nil
+(defcustom diredful-mode nil
+  "Toggle diredful minor mode. Will only affect newly created
+dired buffers. When diredful mode is enabled, files in dired
+buffers will be displayed in different faces and colors."
   :set 'custom-set-minor-mode
   :type    'boolean
   :group   'diredful
