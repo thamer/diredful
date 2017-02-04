@@ -15,6 +15,10 @@ Then to activate by default, add the following into your init file
 
 : (diredful-mode 1)
 
+or use add-hook
+
+: (add-hook 'dired-mode-hook 'diredful-mode)
+
 For manual installation, put diredful.el in your Emacs-Lisp load
 path, and add this to your init file:
 
