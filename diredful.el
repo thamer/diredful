@@ -82,7 +82,10 @@
   :group 'dired)
 
 (defcustom diredful-init-file
-  (convert-standard-filename "~/.emacs.d/diredful-conf.el")
+  (convert-standard-filename
+   (if (boundp 'spacemacs-version)
+       "~/.spacemacs.d/diredful-conf.el"
+     "~/.emacs.d/diredful-conf.el"))
   "Name of file used to save diredful settings."
   :type 'file
   :group 'diredful)
@@ -510,7 +513,7 @@ buffers will be displayed in different faces and colors."
   :set 'custom-set-minor-mode
   :type    'boolean
   :group   'diredful
-)
+  )
 
 (provide 'diredful)
 ;;; diredful.el ends here.
