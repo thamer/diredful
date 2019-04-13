@@ -214,7 +214,7 @@ dired-font-lock-keywords."
          (face (make-face (intern face-name))))
     ;; Reset face by setting the default properties
     (diredful-set-attributes-from-alist
-     face (face-all-attributes 'default))
+     face (face-all-attributes 'default (selected-frame)))
     ;; Set new properties
     (diredful-set-attributes face face-list)
     (symbol-name face)))
@@ -499,6 +499,15 @@ buffers will be displayed in different faces and colors."
         (diredful-settings-load)
         (diredful-internal 1))
     (diredful-internal 0)))
+
+(defun diredful-window-configuration-change ()
+  "Refresh dired buffer in case font size has changed."
+  (when (derived-mode-p 'dired-mode)
+    (if diredful-mode
+        (diredful-internal 1)
+      (diredful-internal 0))))
+
+(add-hook 'window-configuration-change-hook 'diredful-window-configuration-change)
 
 ;; FIXME: There is an autoload bug when using melpa that prevents this
 ;; variable from being set using the customize interface.
