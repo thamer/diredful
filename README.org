@@ -2,7 +2,7 @@
 different faces and colors. Faces are chosen based on file extension,
 file name, or a regexp matching the file line.
 
-Screenshots available at [[http://www.emacswiki.org/emacs-en/Diredful#toc4][EmacsWiki]].
+Screenshots available at [[https://www.emacswiki.org/emacs/Diredful][EmacsWiki]].
 
 ** Install [[https://stable.melpa.org/#/diredful][file:https://stable.melpa.org/packages/diredful-badge.svg]] [[https://melpa.org/#/diredful][file:https://melpa.org/packages/diredful-badge.svg]]
 
