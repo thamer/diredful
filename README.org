@@ -15,6 +15,10 @@ Then to activate by default, add the following into your init file
 
 : (diredful-mode 1)
 
+or use add-hook
+
+: (add-hook 'dired-mode-hook 'diredful-mode)
+
 For manual installation, put diredful.el in your Emacs-Lisp load
 path, and add this to your init file:
 
@@ -45,7 +49,7 @@ following commands:
 
 These settings will be saved to the location of
 =diredful-init-file= (the default is
-"~/.emacs.d/diredful-conf.el"). You may choose a different location
+"~/.emacs.d/diredful-conf.el", for spacemacs, is "~/.spacemacs.d/diredful-conf.el"). You may choose a different location
 by doing:
 
 : M-x customize-variable RET diredful-init-file
